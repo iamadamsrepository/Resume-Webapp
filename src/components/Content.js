@@ -4,7 +4,6 @@ function formatExperience(json) {
     return <div>
         {
             json.map(function (job, _) {
-                console.log(job.points)
                 return <div>
                     <div><b>{job.employer}</b> - {job.position}</div>
                     <div>{job.period}</div>
@@ -50,7 +49,7 @@ function Content(props) {
         setContent(content)
     }
 
-    React.useEffect(() => { getData() })
+    React.useEffect(() => {getData()}, [props.content_id])
 
     return (
         <div className="p-6 w-full">
