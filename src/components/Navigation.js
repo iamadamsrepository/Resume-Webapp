@@ -1,34 +1,59 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-
 import { Link } from "react-router-dom";
+import { faBars, faUser, faPersonDigging, faGraduationCap, faCode, faDiagramProject, faAddressCard } from "@fortawesome/free-solid-svg-icons";
 
 function Navigation() {
-    const className = "text-white p-2 hover:border rounded-[6px]"
+
+    const [menuState, setMenuState] = React.useState(false)
+
+    const className = "text-white p-2 hover:border rounded-[6px] flex flex-col items-center leading-loose cursor-pointer"
+
+    // window.addEventListener()
+    console.log(window.innerWidth)
+
+    function makeListItem(icon, text, link) {
+        switch (menuState) {
+            case true:
+                return <li>
+                    <Link to={link} className={className}>
+                        <FontAwesomeIcon icon={icon} className="text-xl" />
+                        <div>{text}</div>
+                    </Link>
+                </li>
+            case false:
+                return <li>
+                    <Link to={link} className={className}>
+                        <FontAwesomeIcon icon={icon} className="text-xl" />
+                    </Link>
+                </li>
+            default: break
+        }
+    }
 
     return (
         <div className="p-6">
-            <div>
-                <ul>
-                    <li className={className}>
-                        <Link to="/">Profile</Link>
-                    </li>
-                    <li className={className}>
-                        <Link to="/experience">Experience</Link>
-                    </li>
-                    <li className={className}>
-                        <Link to="/education">Education</Link>
-                    </li>
-                    <li className={className}>
-                        <Link to="/languages">Languages</Link>
-                    </li>
-                    <li className={className}>
-                        <Link to="/projects">Projects</Link>
-                    </li>
-                    <li className={className}>
-                        <Link to="/contact">Contact</Link>
-                    </li>
-                </ul>
-            </div>
+            <ul>
+                <li className={className} onClick={() => {
+                    switch (menuState) {
+                        case true:
+                            setMenuState(false)
+                            break
+                        case false:
+                            setMenuState(true)
+                            break
+                        default: break
+                    }
+                }} >
+                    <FontAwesomeIcon icon={faBars} className="text-xl" />
+                </li>
+                {makeListItem(faUser, "Profile", "/")}
+                {makeListItem(faPersonDigging, "Experience", "/experience")}
+                {makeListItem(faGraduationCap, "Education", "/education")}
+                {makeListItem(faCode, "Languages", "/languages")}
+                {makeListItem(faDiagramProject, "Projects", "/projects")}
+                {makeListItem(faAddressCard, "Contact", "/contact")}
+            </ul>
         </div>
     )
 }
